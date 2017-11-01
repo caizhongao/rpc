@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cza.service.mapper.CategoryAttrMapper">
+	<resultMap id="attr" type="com.cza.service.dto.TCategoryAttr">
+		<result property="caid" column="caid"/>
+		<result property="attrName" column="attr_name"/>
+		<result property="cid" column="cid"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<sql id="allColumns">
+			caid,attr_name,cid,status
+	</sql>
+	
+	<select id="batchQueryCategoryAttrs" parameterType="java.util.List" resultMap="attr">
+		select 
+			<include refid="allColumns"></include>
+		from t_category_attr 
+			where caid in
+			<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+		</foreach>
+	</select>
+	
+	
+</mapper>
